@@ -3,12 +3,30 @@
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { getPatternsForPage, pathToPageKey, PAGE_LABELS } from "@/lib/patterns";
+import { useLocale } from "@/components/LocaleProvider";
+
+const UI = {
+  en: {
+    onThisPage: (n: number) => `${n} dark pattern${n === 1 ? "" : "s"} on this page`,
+    title: "What's wrong here",
+    whyItWorks: "Why it works: ",
+    close: "Close",
+  },
+  pt: {
+    onThisPage: (n: number) => `${n} má prática${n === 1 ? "" : "s"} nesta página`,
+    title: "O que tem de errado aqui",
+    whyItWorks: "Por que funciona: ",
+    close: "Fechar",
+  },
+};
 
 export default function HelpBubble() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const { locale } = useLocale();
   const pageKey = pathToPageKey(pathname);
   const patterns = getPatternsForPage(pageKey);
+  const t = UI[locale];
 
   return (
     <>
@@ -26,16 +44,13 @@ export default function HelpBubble() {
             <div className="mb-4 flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-rose-600">
-                  {PAGE_LABELS[pageKey]} — {patterns.length} dark pattern
-                  {patterns.length === 1 ? "" : "s"} on this page
+                  {PAGE_LABELS[pageKey][locale]} — {t.onThisPage(patterns.length)}
                 </p>
-                <h2 className="text-xl font-bold text-neutral-900 dark:text-white">
-                  What&apos;s wrong here
-                </h2>
+                <h2 className="text-xl font-bold text-neutral-900 dark:text-white">{t.title}</h2>
               </div>
               <button
                 onClick={() => setOpen(false)}
-                aria-label="Close"
+                aria-label={t.close}
                 className="rounded-full px-2 py-1 text-lg text-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-800"
               >
                 ✕
@@ -46,13 +61,13 @@ export default function HelpBubble() {
               {patterns.map((p) => (
                 <li key={p.id} className="rounded-xl border border-neutral-200 p-4 dark:border-neutral-800">
                   <p className="text-[11px] font-semibold uppercase tracking-wide text-rose-500">
-                    {p.category}
+                    {p.category[locale]}
                   </p>
-                  <p className="font-semibold text-neutral-900 dark:text-white">{p.name}</p>
-                  <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">{p.description}</p>
+                  <p className="font-semibold text-neutral-900 dark:text-white">{p.name[locale]}</p>
+                  <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">{p.description[locale]}</p>
                   <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-500">
-                    <span className="font-medium text-neutral-700 dark:text-neutral-300">Why it works: </span>
-                    {p.why}
+                    <span className="font-medium text-neutral-700 dark:text-neutral-300">{t.whyItWorks}</span>
+                    {p.why[locale]}
                   </p>
                 </li>
               ))}

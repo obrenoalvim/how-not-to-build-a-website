@@ -1,38 +1,54 @@
-import Link from "next/link";
+"use client";
 
-const PLANS = [
-  {
-    name: "Starter",
-    price: 9,
-    original: null,
-    badge: null,
-    features: ["1 project", "Basic reports", "Email support"],
+import Link from "next/link";
+import { useLocale } from "@/components/LocaleProvider";
+
+const UI = {
+  en: {
+    title: "Simple, transparent pricing",
+    sub: "Plus applicable taxes and a platform fee, shown at checkout.",
+    choose: "Choose",
+    plans: [
+      { name: "Starter", price: 9, original: null, badge: null, features: ["1 project", "Basic reports", "Email support"] },
+      { name: "Team", price: 49, original: 79, badge: null, features: ["5 projects", "Basic reports", "Email support"] },
+      {
+        name: "Business",
+        price: 59,
+        original: 129,
+        badge: "Most Popular",
+        features: ["Unlimited projects", "Advanced reports", "Priority support", "SSO"],
+      },
+    ],
   },
-  {
-    name: "Team",
-    price: 49,
-    original: 79,
-    badge: null,
-    // priced almost like Business but with a fraction of the value — the decoy
-    features: ["5 projects", "Basic reports", "Email support"],
+  pt: {
+    title: "Preços simples e transparentes",
+    sub: "Mais impostos aplicáveis e taxa de plataforma, mostrados na finalização.",
+    choose: "Escolher",
+    plans: [
+      { name: "Inicial", price: 9, original: null, badge: null, features: ["1 projeto", "Relatórios básicos", "Suporte por email"] },
+      { name: "Time", price: 49, original: 79, badge: null, features: ["5 projetos", "Relatórios básicos", "Suporte por email"] },
+      {
+        name: "Empresarial",
+        price: 59,
+        original: 129,
+        badge: "Mais popular",
+        features: ["Projetos ilimitados", "Relatórios avançados", "Suporte prioritário", "SSO"],
+      },
+    ],
   },
-  {
-    name: "Business",
-    price: 59,
-    original: 129,
-    badge: "Most Popular",
-    features: ["Unlimited projects", "Advanced reports", "Priority support", "SSO"],
-  },
-];
+};
 
 export default function PricingPage() {
+  const { locale } = useLocale();
+  const t = UI[locale];
+
   return (
     <div className="mx-auto max-w-6xl px-6 py-12">
-      <h1 className="text-3xl font-bold">Simple, transparent pricing</h1>
-      <p className="mt-2 text-sm text-neutral-500">Plus applicable taxes and a platform fee, shown at checkout.</p>
+      <h1 className="text-3xl font-bold">{t.title}</h1>
+      <p className="mt-2 text-sm text-neutral-500">{t.sub}</p>
 
       <div className="mt-8 grid gap-6 sm:grid-cols-3">
-        {PLANS.map((plan) => (
+        {t.plans.map((plan) => (
           <div
             key={plan.name}
             className={`relative rounded-2xl border p-6 ${
@@ -63,7 +79,7 @@ export default function PricingPage() {
               href="/checkout"
               className="mt-6 block rounded-lg bg-indigo-600 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-indigo-500"
             >
-              Choose {plan.name}
+              {t.choose} {plan.name}
             </Link>
           </div>
         ))}
