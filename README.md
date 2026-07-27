@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# How Not To Build A Website
 
-## Getting Started
+A working fake SaaS ("Flowly") built to showcase bad-but-common UX practices — dark
+patterns and the cognitive biases they exploit — in context, on real pages, instead of
+as a bullet list.
 
-First, run the development server:
+Every page has a **?** button in the bottom-right corner explaining exactly which
+patterns are live on that page and why they work. A `/patterns` page lists the full
+catalog of 30, grouped by mechanism.
+
+## Pages
+
+| Route | What's being demonstrated |
+|---|---|
+| `/` | fake countdown, fake activity counter, disguised ad, exit-intent confirmshaming, competing CTAs |
+| `/signup` | information-overload form, pre-ticked opt-in, buried validation, fake scarcity, hidden password rules |
+| `/login` | oversized social login, vague errors, buried password reset |
+| `/pricing` | decoy pricing tier, fake price anchor, drip pricing, fake "most popular" badge |
+| `/checkout` | sneaked-in add-on, forced account creation, last-step fees, stacked urgency, confirmshaming |
+| `/dashboard` | fake progress bar, evasive upgrade banner, fake notification badge |
+| `/account` | cancellation buried in menus, guilt-trip retention screen, forced phone call, infinite discount-offer loop |
+| `/patterns` | the full catalog, browsable independent of the demo pages |
+
+Global (every page): asymmetric cookie consent banner, unsolicited chat nag.
+
+## Stack
+
+Next.js (App Router) + TypeScript + Tailwind CSS. No backend, no database — every
+"account" and "payment" on the site is inert UI.
+
+## Running it
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Why
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Educational/portfolio project. None of this is meant to actually manipulate a real
+visitor — the point is that clicking the **?** immediately tells you what's wrong and
+why it works, which is the opposite of how these patterns behave in the wild.
