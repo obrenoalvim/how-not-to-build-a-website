@@ -1,3 +1,5 @@
+English | [Português](README.pt.md)
+
 # How Not To Build A Website
 
 A working fake SaaS ("Flowly") built to showcase bad-but-common UX practices — dark
